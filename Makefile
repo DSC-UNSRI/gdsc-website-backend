@@ -2,14 +2,17 @@
 include .env
 export $(shell sed 's/=.*//' .env)
 
+run:
+	go run cmd/main.go
+
 tidy:
 	go mod tidy
 
 migrate-up:
-	migrate -path ./db/migration -database $(DB_CONNECTION_URL) -verbose up
+	migrate -path ./internal/db/postgresql/migration -database $(DB_CONNECTION_URL) -verbose up
 
 migrate-down:
-	migrate -path ./db/migration -database $(DB_CONNECTION_URL) -verbose down 
+	migrate -path ./internal/db/postgresql/migration -database $(DB_CONNECTION_URL) -verbose down 
 
 migrate-fresh: migrate-down migrate-up
 
