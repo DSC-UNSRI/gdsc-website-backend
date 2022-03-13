@@ -5,12 +5,17 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
-type Store struct {
+//go:generate mockgen -source=./store.go -destination=./__mock__/store.go
+type Store interface {
 	postgresql.Querier
 }
 
-func NewStore(db *pgxpool.Pool) *Store {
-	return &Store{
+type storeImpl struct {
+	postgresql.Querier
+}
+
+func NewStore(db *pgxpool.Pool) Store {
+	return &storeImpl{
 		Querier: postgresql.New(db),
 	}
 }

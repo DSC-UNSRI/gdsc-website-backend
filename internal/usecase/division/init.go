@@ -1,0 +1,23 @@
+package usecase
+
+import (
+	"github.com/DSC-UNSRI/gdsc-website-backend/internal/db"
+	"github.com/DSC-UNSRI/gdsc-website-backend/internal/model"
+)
+
+//go:generate mockgen -source=./init.go -destination=./__mock__/division.go -package=mock_division
+type DivisionUsecase interface {
+	CreateDivision(model.CreateDivisionRequest) model.WebServiceResponse
+}
+
+var _ DivisionUsecase = &divisionUsecaseImpl{}
+
+func NewDivisionUsecase(store db.Store) DivisionUsecase {
+	return &divisionUsecaseImpl{
+		Store: store,
+	}
+}
+
+type divisionUsecaseImpl struct {
+	db.Store
+}

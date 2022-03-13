@@ -1,4 +1,4 @@
-package postgresql_test
+package db
 
 import (
 	"context"
@@ -8,14 +8,13 @@ import (
 	"testing"
 
 	"github.com/DSC-UNSRI/gdsc-website-backend/config"
-	postgresql "github.com/DSC-UNSRI/gdsc-website-backend/internal/db/postgresql/sqlc"
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
-var querier postgresql.Querier
+var store Store
 
 func TestMain(m *testing.M) {
-	config := config.New("../../../../.env")
+	config := config.New("../../.env")
 	dbConfig, err := pgxpool.ParseConfig(config.PostgresDSN)
 	if err != nil {
 		log.Fatalf("something went wrong %v", err)
@@ -27,7 +26,7 @@ func TestMain(m *testing.M) {
 	}
 	defer conn.Close()
 
-	querier = postgresql.New(conn)
+	store = NewStore(conn)
 
 	os.Exit(m.Run())
 }

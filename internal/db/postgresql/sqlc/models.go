@@ -3,13 +3,45 @@
 package postgresql
 
 import (
+	"database/sql"
 	"time"
 
 	"github.com/google/uuid"
 )
 
-type User struct {
-	Uuid      uuid.UUID `json:"uuid"`
-	Name      string    `json:"name"`
-	Birthdate time.Time `json:"birthdate"`
+type CoreTeam struct {
+	DivisionID uuid.UUID
+	MemberID   uuid.UUID
+}
+
+type Division struct {
+	ID        uuid.UUID
+	Name      string
+	CreatedAt time.Time
+}
+
+type Member struct {
+	ID          uuid.UUID
+	FullName    string
+	University  string
+	RoleID      uuid.UUID
+	DivisionID  uuid.NullUUID
+	PicturePath sql.NullString
+	CreatedAt   time.Time
+	DeletedAt   sql.NullTime
+}
+
+type Message struct {
+	ID          uuid.UUID
+	FullName    sql.NullString
+	PhoneNumber sql.NullString
+	Question    sql.NullString
+	CreatedAt   time.Time
+	DeletedAt   sql.NullTime
+}
+
+type Role struct {
+	ID        uuid.UUID
+	Name      string
+	CreatedAt time.Time
 }

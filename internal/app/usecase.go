@@ -1,13 +1,13 @@
 package app
 
-import usecase "github.com/DSC-UNSRI/gdsc-website-backend/internal/usecase/user"
+import usecase "github.com/DSC-UNSRI/gdsc-website-backend/internal/usecase/division"
 
 type usecases struct {
-	userUsecase usecase.UserUsecase
+	division usecase.DivisionUsecase
 }
 
 func (app *App) initUsecase() {
 	var usecases usecases
-	usecases.userUsecase = usecase.NewUserUsecase(app.store)
+	usecases.division = usecase.NewDivisionUsecase(app.store)
 	app.usecase = usecases
 }

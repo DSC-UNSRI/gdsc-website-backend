@@ -1,15 +1,15 @@
 package app
 
-import delivery "github.com/DSC-UNSRI/gdsc-website-backend/internal/delivery/user"
+import delivery "github.com/DSC-UNSRI/gdsc-website-backend/internal/delivery/division"
 
 type deliveries struct {
-	user delivery.UserDelivery
+	division delivery.DivisionDelivery
 }
 
 func (app *App) initDelivery() {
 	var deliveries deliveries
-	usecase := app.usecase.userUsecase
-	deliveries.user = delivery.NewUserHandler(usecase)
+	usecase := app.usecase.division
+	deliveries.division = delivery.NewDivisionDelivery(usecase)
 
 	app.delivery = deliveries
 }

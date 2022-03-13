@@ -7,7 +7,7 @@ import (
 )
 
 func TestConfigNew(t *testing.T) {
-	config := New()
+	config := New("../.env")
 	require.NotEmpty(t, config)
 	require.IsType(t, "", config.PostgresDSN)
 }

@@ -1,12 +1,11 @@
 package app
 
 import (
+	"github.com/DSC-UNSRI/gdsc-website-backend/internal/routes"
 	"github.com/gin-gonic/gin"
 )
 
-func (app *App) createHandlers() *gin.Engine {
-	router := gin.Default()
-	router.GET("/", app.delivery.user.CreateUser)
-
-	return router
+func (app *App) handlerV1(router *gin.RouterGroup) {
+	divisionGroup := router.Group("/divisions")
+	routes.DivisionRoutes(divisionGroup, app.delivery.division)
 }

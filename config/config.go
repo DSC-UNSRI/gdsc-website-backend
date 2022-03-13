@@ -12,12 +12,10 @@ type Config struct {
 	PostgresDSN string `mapstructure:"DB_CONNECTION_URL"`
 }
 
-func New() Config {
+func New(filePath string) Config {
 	var config Config
 
-	viper.SetConfigName(".env")
-	viper.AddConfigPath(".")
-	viper.SetConfigType("env")
+	viper.SetConfigFile(filePath)
 	err := viper.ReadInConfig()
 	if err != nil {
 		log.Fatalf("something went wrong %v", err)
