@@ -26,10 +26,17 @@ func HandleValidationErrors(errs validator.ValidationErrors) (res model.Validati
 	var finalErrors []string
 	for _, v := range errs {
 		// debugFieldError(v)
-		finalErrors = append(
-			finalErrors,
-			customErrors[v.Tag()](v.Field()),
-		)
+		translateFunction, ok := customErrors[v.Tag()]
+		if ok {
+			translatedFieldName, found := customMessages[v.Field()]
+			if !found {
+				translatedFieldName = v.Field()
+			} 
+			finalErrors = append(
+				finalErrors,
+				translateFunction(v, translatedFieldName),
+			)
+		}
 	}
 	if len(finalErrors) > 0 {
 		res.Message = finalErrors[0]

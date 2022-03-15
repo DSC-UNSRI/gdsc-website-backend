@@ -3,3 +3,4 @@
 db/sqlc/
 dist/
 ./db/
+test.go

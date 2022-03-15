@@ -1,5 +1,5 @@
 package validations
 
-func registerCustomFields() {
-	customFields["division_name"] = "Nama Divisi"
+func registerCustomMessages() {
+	customMessages["division_name"] = "Nama Divisi"
 }

@@ -9,12 +9,12 @@ import (
 )
 
 func (usecase *divisionUsecaseImpl) CreateDivision(req model.CreateDivisionRequest) model.WebServiceResponse {
-	division, err := usecase.Store.CreateDivision(context.Background(), req.Name)
+	divisionDb, err := usecase.Store.CreateDivision(context.Background(), req.Name)
 	if err != nil {
 		return utils.ToWebServiceResponse("Gagal membuat divisi", http.StatusInternalServerError, nil)
 	}
 
 	return utils.ToWebServiceResponse("Divisi berhasil dibuat", http.StatusCreated, map[string]interface{}{
-		"division": division,
+		"division": model.Division(divisionDb),
 	})
 }

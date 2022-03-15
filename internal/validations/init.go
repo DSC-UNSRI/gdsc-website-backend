@@ -7,15 +7,15 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-var customErrors map[string]func(field string) string
+var customErrors map[string]func(field validator.FieldError, translatedFieldName string) string
 
-var customFields map[string]string
+var customMessages map[string]string
 
 func InitValidations(validate *validator.Validate) {
-	customFields = map[string]string{}
-	registerCustomFields()
+	customMessages = map[string]string{}
+	registerCustomMessages()
 
-	customErrors = map[string]func(field string) string{}
+	customErrors = map[string]func(validator.FieldError, string) string{}
 	registerCustomErrors()
 
 	validate.RegisterTagNameFunc(func(fld reflect.StructField) string {

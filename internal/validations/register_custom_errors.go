@@ -1,16 +1,17 @@
 package validations
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/go-playground/validator/v10"
+)
 
 func registerCustomErrors() {
-	customErrors["required"] = func(field string) string {
-		var name string
-		val, ok := customFields[field]
-		if ok {
-			name = val
-		} else {
-			name = field
-		}
-		return fmt.Sprintf("%s tidak boleh kosong", name)
+	customErrors["required"] = func(field validator.FieldError, translatedFieldName string) string {
+		return fmt.Sprintf("%s tidak boleh kosong", translatedFieldName)
+	}
+
+	customErrors["startswith"] = func(field validator.FieldError, translatedFieldName string) string {
+		return fmt.Sprintf("%s harus berawalan %s", translatedFieldName, field.Value())
 	}
 }
