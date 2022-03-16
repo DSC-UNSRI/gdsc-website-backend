@@ -1,5 +1,9 @@
+ifeq ($(APP_MODE), development)
+	-include .env
+else
+	include .env
+endif
 
-include .env
 export $(shell sed 's/=.*//' .env)
 
 run:

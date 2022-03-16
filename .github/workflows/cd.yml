@@ -18,10 +18,10 @@ jobs:
           go-version: "^1.17"
       
       - name: Install dependencies
-        run: make tidy
+        run: make tidy APP_MODE=development
       
       - name: Build binary
-        run: make build
+        run: make build APP_MODE=development
       
       - name: Copy binary to VPS
         uses: appleboy/scp-action@master
