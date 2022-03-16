@@ -1,9 +1,10 @@
 name: CD
 
 on:
-    branches: [ main ]
+  push:
+    branches:
+      - main
 
-# Criando o workflow
 jobs:
   build-and-run:
     runs-on: ubuntu-latest
