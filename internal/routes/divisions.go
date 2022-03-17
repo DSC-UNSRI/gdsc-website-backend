@@ -12,4 +12,5 @@ func DivisionRoutes(router *gin.RouterGroup, delivery delivery.DivisionDelivery)
 			"test": "halo",
 		})
 	})
+	router.DELETE("/:id", delivery.DeleteDivision)
 }

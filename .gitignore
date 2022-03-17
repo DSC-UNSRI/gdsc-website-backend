@@ -4,3 +4,5 @@ db/sqlc/
 dist/
 ./db/
 test.go
+go.mod
+go.sum

@@ -4,7 +4,7 @@ INSERT INTO divisions (name)
 RETURNING
 	*;
 
--- name: DeleteDivision :exec
+-- name: DeleteDivision :execrows
 DELETE FROM divisions
 WHERE id = @division_id;
 
