@@ -30,7 +30,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: "dist/,docker-compose.yml"
+          source: "./dist/app,docker-compose.yml,Dockerfile"
           target: "~/app/"
       
       - name: Run binary in VPS
