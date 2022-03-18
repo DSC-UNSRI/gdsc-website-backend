@@ -10,7 +10,7 @@ run:
 	go run cmd/main.go
 
 build:
-	go build -o dist/app cmd/main.go
+	CGO_ENABLED=0 go build -o dist/app cmd/main.go
 
 tidy:
 	go mod tidy

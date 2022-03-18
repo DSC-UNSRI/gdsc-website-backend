@@ -20,7 +20,7 @@ func New(filePath string) Config {
 	if err != nil {
 		log.Fatalf("something went wrong %v", err)
 	}
-	viper.SetDefault("APP_HOST", "localhost")
+	viper.SetDefault("APP_HOST", "0.0.0.0")
 	viper.SetDefault("APP_PORT", "8000")
 	viper.Unmarshal(&config)
 	return config

@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  gdsc-backend-app:
+    build: .
+    container_name: gdsc-backend-app
+    networks:
+      - nginx
+  
+networks:
+  nginx:
+    external: true
+    name: nginx
+        
