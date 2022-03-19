@@ -33,7 +33,7 @@ jobs:
           source: "./dist/app,docker-compose.yml,Dockerfile"
           target: "~/app/"
       
-      - name: Run binary in VPS
+      - name: Build Docker Container
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -42,4 +42,5 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd ~/app
+            docker-compose down
             docker-compose up -d
