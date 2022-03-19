@@ -17,7 +17,7 @@ post:
           required:
             - division_name
   responses:
-    "200":
+    "201":
       description: Success create a division
       content:
         application/json:
