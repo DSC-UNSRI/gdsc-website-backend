@@ -1,0 +1,24 @@
+openapi: 3.0.0
+info:
+  title: GDSC Website API
+  version: 1.0.0
+  description: An API used for GDSC Chapter Sriwijaya University Website
+
+servers:
+  - url: https://gdsc-api.nabiels.my.id/api/v1
+
+components:
+  schemas:
+    response:
+      $ref: "./openapi/schemas/response.yaml"
+
+    division:
+      $ref: "./openapi/schemas/division.yaml"
+
+tags:
+  - name: Divisions
+    description: Any API endpoints related with division here
+
+paths:
+  /divisions:
+    $ref: "./openapi/paths/divisions.yaml"

@@ -1,0 +1,32 @@
+post:
+  tags:
+    - Divisions
+  summary: Create a division
+  description: Create a division
+  requestBody:
+    description: Request body to create a division
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            division_name:
+              type: string
+              example: backend
+          required:
+            - division_name
+  responses:
+    "200":
+      description: Success create a division
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "../schemas/response.yaml"
+              - properties:
+                  data:
+                    type: object
+                    properties:
+                      division:
+                        $ref: "../schemas/division.yaml"

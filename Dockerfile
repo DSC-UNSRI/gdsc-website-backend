@@ -3,4 +3,4 @@ WORKDIR /app
 COPY ./app .
 COPY .env .
 CMD [ "./app" ]
-EXPOSE 80
+EXPOSE 8000
