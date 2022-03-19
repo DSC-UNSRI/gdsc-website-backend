@@ -9,15 +9,15 @@ servers:
 
 components:
   schemas:
-    response:
+    Response:
       $ref: "./openapi/schemas/response.yaml"
 
-    division:
+    Division:
       $ref: "./openapi/schemas/division.yaml"
 
 tags:
   - name: Divisions
-    description: Any API endpoints related with division here
+    description: Any API endpoints related to division here
 
 paths:
   /divisions:
