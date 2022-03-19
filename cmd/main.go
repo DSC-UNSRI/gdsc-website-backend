@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	config := config.New(".env")
 	dbConfig, err := pgxpool.ParseConfig(config.PostgresDSN)
 	if err != nil {

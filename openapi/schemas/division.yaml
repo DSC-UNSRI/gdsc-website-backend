@@ -1,0 +1,17 @@
+title: Division
+type: object
+properties:
+  id:
+    type: string
+  division_name:
+    type: string
+  created_at:
+    type: string
+required:
+  - id
+  - division_name
+  - created_at
+example:
+  id: d95bd1cd-2284-4a2e-bb09-e3a367f4bda8
+  division_name: backend
+  created_at: "2022-03-15T13:56:59.123003Z"

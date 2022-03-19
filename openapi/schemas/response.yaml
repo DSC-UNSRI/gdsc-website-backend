@@ -1,0 +1,18 @@
+title: Response
+type: object
+properties:
+  message:
+    type: string
+    description: Any message about the response here
+  status:
+    type: number
+    description: http status code
+  data:
+    type: object
+    nullable: true
+  errors:
+    type: array
+    nullable: true
+required:
+  - message
+  - status
