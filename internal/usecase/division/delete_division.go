@@ -10,6 +10,7 @@ import (
 )
 
 func (usecase *divisionUsecaseImpl) DeleteDivision(req model.DeleteDivisionRequest) model.WebServiceResponse {
+
 	err := usecase.Store.DeleteDivision(context.Background(), uuid.MustParse(req.ID))
 
 	if err != nil {
