@@ -8,6 +8,16 @@ servers:
   - url: https://gdsc-api.nabiels.my.id/api/v1
 
 components:
+  securitySchemes:
+    jwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "JWT Authentication for protected resources"
+
+  responses:
+    $ref: "./openapi/responses/responses.yml"
+
   schemas:
     Response:
       $ref: "./openapi/schemas/response.yaml"

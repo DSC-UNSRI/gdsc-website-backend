@@ -1,0 +1,17 @@
+unprocessable-entity:
+  description: "Request error from client"
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: "../schemas/response.yaml"
+          - properties:
+              data:
+                nullable: true
+                default: null
+              errors:
+                type: array
+                example:
+                  - Ini error 1
+                  - Ini error 2
+

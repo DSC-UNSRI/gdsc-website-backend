@@ -1,9 +1,11 @@
 title: Response
 type: object
+description: Schema for all responses
 properties:
   message:
     type: string
     description: Any message about the response here
+    example: "Sucessfully created {resource}"
   status:
     type: number
     description: http status code

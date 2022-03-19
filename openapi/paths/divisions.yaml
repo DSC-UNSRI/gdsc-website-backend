@@ -1,4 +1,6 @@
 post:
+  security:
+    - jwt: []
   tags:
     - Divisions
   summary: Create a division
@@ -30,3 +32,5 @@ post:
                     properties:
                       division:
                         $ref: "../schemas/division.yaml"
+    "422":
+      $ref: "../responses/responses.yml#/unprocessable-entity"
