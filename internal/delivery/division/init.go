@@ -8,6 +8,7 @@ import (
 type DivisionDelivery interface {
 	CreateDivision(ctx *gin.Context)
 	DeleteDivision(ctx *gin.Context)
+	GetDivision(ctx *gin.Context)
 }
 
 var _ DivisionDelivery = &divisionHandler{}

@@ -7,10 +7,6 @@ import (
 
 func DivisionRoutes(router *gin.RouterGroup, delivery delivery.DivisionDelivery) {
 	router.POST("/", delivery.CreateDivision)
-	router.GET("/", func(ctx *gin.Context) {
-		ctx.JSON(200, map[interface{}]interface{}{
-			"test": "halo",
-		})
-	})
+	router.GET("/:id", delivery.GetDivision)
 	router.DELETE("/:id", delivery.DeleteDivision)
 }

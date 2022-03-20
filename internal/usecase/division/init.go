@@ -9,6 +9,7 @@ import (
 type DivisionUsecase interface {
 	CreateDivision(model.CreateDivisionRequest) model.WebServiceResponse
 	DeleteDivision(model.DeleteDivisionRequest) model.WebServiceResponse
+	GetDivision(model.GetDivisionRequest) model.WebServiceResponse
 }
 
 var _ DivisionUsecase = &divisionUsecaseImpl{}

@@ -14,4 +14,8 @@ func registerCustomErrors() {
 	customErrors["startswith"] = func(field validator.FieldError, translatedFieldName string) string {
 		return fmt.Sprintf("%s harus berawalan %s", translatedFieldName, field.Value())
 	}
+
+	customErrors["uuid"] = func(field validator.FieldError, translatedFieldName string) string {
+		return "ID invalid"
+	}
 }

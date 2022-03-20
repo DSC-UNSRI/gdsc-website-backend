@@ -11,7 +11,7 @@ import (
 
 func (usecase *divisionUsecaseImpl) DeleteDivision(req model.DeleteDivisionRequest) model.WebServiceResponse {
 
-	err := usecase.Store.DeleteDivision(context.Background(), uuid.MustParse(req.ID))
+	_, err := usecase.Store.DeleteDivision(context.Background(), uuid.MustParse(req.ID))
 
 	if err != nil {
 		return utils.ToWebServiceResponse("Gagal menghapus divisi", http.StatusInternalServerError, nil)
