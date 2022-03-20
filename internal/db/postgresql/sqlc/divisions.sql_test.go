@@ -88,7 +88,8 @@ func TestListDivision(t *testing.T) {
 
 func TestDeleteDivision(t *testing.T) {
 	division := createDivision(t)
-	err := querier.DeleteDivision(context.Background(), division.ID)
+	affectedRows, err := querier.DeleteDivision(context.Background(), division.ID)
+	require.NotZero(t, affectedRows)
 	require.NoError(t, err)
 	_, err = querier.GetDivision(context.Background(), division.ID)
 	require.ErrorIs(t, pgx.ErrNoRows, err)
