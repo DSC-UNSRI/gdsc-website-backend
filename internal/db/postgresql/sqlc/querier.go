@@ -11,7 +11,7 @@ import (
 type Querier interface {
 	CreateDivision(ctx context.Context, name string) (Division, error)
 	CreateMember(ctx context.Context, arg CreateMemberParams) (Member, error)
-	DeleteDivision(ctx context.Context, divisionID uuid.UUID) error
+	DeleteDivision(ctx context.Context, divisionID uuid.UUID) (int64, error)
 	DeleteMember(ctx context.Context, memberid uuid.UUID) error
 	GetDivision(ctx context.Context, divisionid uuid.UUID) (Division, error)
 	GetMember(ctx context.Context, memberid uuid.UUID) (Member, error)
