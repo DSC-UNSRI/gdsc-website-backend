@@ -1,15 +1,19 @@
 package app
 
-import delivery "github.com/DSC-UNSRI/gdsc-website-backend/internal/delivery/division"
+import (
+	dDelivery "github.com/DSC-UNSRI/gdsc-website-backend/internal/delivery/division"
+	mDelivery "github.com/DSC-UNSRI/gdsc-website-backend/internal/delivery/member"
+)
 
 type deliveries struct {
-	division delivery.DivisionDelivery
+	division dDelivery.DivisionDelivery
+	member   mDelivery.MemberDelivery
 }
 
 func (app *App) initDelivery() {
 	var deliveries deliveries
-	usecase := app.usecase.division
-	deliveries.division = delivery.NewDivisionDelivery(usecase)
+	deliveries.division = dDelivery.NewDivisionDelivery(app.usecase.division)
+	deliveries.member = mDelivery.NewMemberDelivery(app.usecase.member)
 
 	app.delivery = deliveries
 }

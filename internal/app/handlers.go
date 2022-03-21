@@ -7,5 +7,7 @@ import (
 
 func (app *App) handlerV1(router *gin.RouterGroup) {
 	divisionGroup := router.Group("/divisions")
+	memberGroup := router.Group("/members")
 	routes.DivisionRoutes(divisionGroup, app.delivery.division)
+	routes.MemberRoutes(memberGroup, app.delivery.member)
 }
