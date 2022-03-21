@@ -8,7 +8,7 @@ import (
 	context "context"
 	reflect "reflect"
 
-	sqlc "github.com/DSC-UNSRI/gdsc-website-backend/internal/db/postgresql/sqlc"
+	postgresql "github.com/DSC-UNSRI/gdsc-website-backend/internal/db/postgresql/sqlc"
 	gomock "github.com/golang/mock/gomock"
 	uuid "github.com/google/uuid"
 )
@@ -37,10 +37,10 @@ func (m *MockStore) EXPECT() *MockStoreMockRecorder {
 }
 
 // CreateDivision mocks base method.
-func (m *MockStore) CreateDivision(ctx context.Context, name string) (sqlc.Division, error) {
+func (m *MockStore) CreateDivision(ctx context.Context, name string) (postgresql.Division, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateDivision", ctx, name)
-	ret0, _ := ret[0].(sqlc.Division)
+	ret0, _ := ret[0].(postgresql.Division)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -52,10 +52,10 @@ func (mr *MockStoreMockRecorder) CreateDivision(ctx, name interface{}) *gomock.C
 }
 
 // CreateMember mocks base method.
-func (m *MockStore) CreateMember(ctx context.Context, arg sqlc.CreateMemberParams) (sqlc.Member, error) {
+func (m *MockStore) CreateMember(ctx context.Context, arg postgresql.CreateMemberParams) (postgresql.Member, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateMember", ctx, arg)
-	ret0, _ := ret[0].(sqlc.Member)
+	ret0, _ := ret[0].(postgresql.Member)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -67,11 +67,12 @@ func (mr *MockStoreMockRecorder) CreateMember(ctx, arg interface{}) *gomock.Call
 }
 
 // DeleteDivision mocks base method.
-func (m *MockStore) DeleteDivision(ctx context.Context, divisionID uuid.UUID) error {
+func (m *MockStore) DeleteDivision(ctx context.Context, divisionID uuid.UUID) (int64, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DeleteDivision", ctx, divisionID)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(int64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // DeleteDivision indicates an expected call of DeleteDivision.
@@ -95,10 +96,10 @@ func (mr *MockStoreMockRecorder) DeleteMember(ctx, memberid interface{}) *gomock
 }
 
 // GetDivision mocks base method.
-func (m *MockStore) GetDivision(ctx context.Context, divisionid uuid.UUID) (sqlc.Division, error) {
+func (m *MockStore) GetDivision(ctx context.Context, divisionid uuid.UUID) (postgresql.Division, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetDivision", ctx, divisionid)
-	ret0, _ := ret[0].(sqlc.Division)
+	ret0, _ := ret[0].(postgresql.Division)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -110,10 +111,10 @@ func (mr *MockStoreMockRecorder) GetDivision(ctx, divisionid interface{}) *gomoc
 }
 
 // GetMember mocks base method.
-func (m *MockStore) GetMember(ctx context.Context, memberid uuid.UUID) (sqlc.Member, error) {
+func (m *MockStore) GetMember(ctx context.Context, memberid uuid.UUID) (postgresql.Member, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetMember", ctx, memberid)
-	ret0, _ := ret[0].(sqlc.Member)
+	ret0, _ := ret[0].(postgresql.Member)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -125,10 +126,10 @@ func (mr *MockStoreMockRecorder) GetMember(ctx, memberid interface{}) *gomock.Ca
 }
 
 // ListDivisions mocks base method.
-func (m *MockStore) ListDivisions(ctx context.Context, arg sqlc.ListDivisionsParams) ([]sqlc.Division, error) {
+func (m *MockStore) ListDivisions(ctx context.Context, arg postgresql.ListDivisionsParams) ([]postgresql.Division, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ListDivisions", ctx, arg)
-	ret0, _ := ret[0].([]sqlc.Division)
+	ret0, _ := ret[0].([]postgresql.Division)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -140,10 +141,10 @@ func (mr *MockStoreMockRecorder) ListDivisions(ctx, arg interface{}) *gomock.Cal
 }
 
 // ListMembers mocks base method.
-func (m *MockStore) ListMembers(ctx context.Context, arg sqlc.ListMembersParams) ([]sqlc.Member, error) {
+func (m *MockStore) ListMembers(ctx context.Context, arg postgresql.ListMembersParams) ([]postgresql.Member, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ListMembers", ctx, arg)
-	ret0, _ := ret[0].([]sqlc.Member)
+	ret0, _ := ret[0].([]postgresql.Member)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -155,10 +156,10 @@ func (mr *MockStoreMockRecorder) ListMembers(ctx, arg interface{}) *gomock.Call 
 }
 
 // UpdateDivision mocks base method.
-func (m *MockStore) UpdateDivision(ctx context.Context, arg sqlc.UpdateDivisionParams) (sqlc.Division, error) {
+func (m *MockStore) UpdateDivision(ctx context.Context, arg postgresql.UpdateDivisionParams) (postgresql.Division, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdateDivision", ctx, arg)
-	ret0, _ := ret[0].(sqlc.Division)
+	ret0, _ := ret[0].(postgresql.Division)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -170,10 +171,10 @@ func (mr *MockStoreMockRecorder) UpdateDivision(ctx, arg interface{}) *gomock.Ca
 }
 
 // UpdateMember mocks base method.
-func (m *MockStore) UpdateMember(ctx context.Context, arg sqlc.UpdateMemberParams) (sqlc.Member, error) {
+func (m *MockStore) UpdateMember(ctx context.Context, arg postgresql.UpdateMemberParams) (postgresql.Member, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdateMember", ctx, arg)
-	ret0, _ := ret[0].(sqlc.Member)
+	ret0, _ := ret[0].(postgresql.Member)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
