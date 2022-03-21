@@ -16,6 +16,7 @@ import (
 )
 
 func TestDeleteDivisionSuccess(t *testing.T) {
+	rr, router := getRouter()
 
 	usecaseReturn := model.WebServiceResponse{
 		Message: "Divisi berhasil dihapus",
@@ -52,6 +53,7 @@ func TestDeleteDivisionSuccess(t *testing.T) {
 }
 
 func TestDeleteDivisionFailed(t *testing.T) {
+	rr, router := getRouter()
 	usecaseReturn := model.WebServiceResponse{
 		Message: "Gagal menghapus divisi",
 		Status:  500,
@@ -86,6 +88,7 @@ func TestDeleteDivisionFailed(t *testing.T) {
 }
 
 func TestDeleteDivisionFailedOnUUIDValidation(t *testing.T) {
+	rr, router := getRouter()
 
 	validator, ok := binding.Validator.Engine().(*validator.Validate)
 	if !ok {

@@ -7,5 +7,6 @@ import (
 
 func DivisionRoutes(router *gin.RouterGroup, delivery delivery.DivisionDelivery) {
 	router.POST("", delivery.CreateDivision)
+	router.GET("/:id", delivery.GetDivision)
 	router.DELETE("/:id", delivery.DeleteDivision)
 }
