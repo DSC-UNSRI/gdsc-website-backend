@@ -33,9 +33,9 @@ type Member struct {
 
 type Message struct {
 	ID          uuid.UUID
-	FullName    sql.NullString
-	PhoneNumber sql.NullString
-	Question    sql.NullString
+	FullName    string
+	PhoneNumber string
+	Question    string
 	CreatedAt   time.Time
 	DeletedAt   sql.NullTime
 }

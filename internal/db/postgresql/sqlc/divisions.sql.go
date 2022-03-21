@@ -5,7 +5,6 @@ package postgresql
 
 import (
 	"context"
-	"errors"
 
 	"github.com/google/uuid"
 )
@@ -29,15 +28,12 @@ DELETE FROM divisions
 WHERE id = $1
 `
 
-func (q *Queries) DeleteDivision(ctx context.Context, divisionID uuid.UUID) (error) {
-	
-	division,err := q.GetDivision(ctx, divisionID)
-	if division.Name != ""{
-		q.db.Exec(ctx, deleteDivision, divisionID)
-		return err
+func (q *Queries) DeleteDivision(ctx context.Context, divisionID uuid.UUID) (int64, error) {
+	result, err := q.db.Exec(ctx, deleteDivision, divisionID)
+	if err != nil {
+		return 0, err
 	}
-	err = errors.New("invalid division id")
-	return  err
+	return result.RowsAffected(), nil
 }
 
 const getDivision = `-- name: GetDivision :one
@@ -94,7 +90,7 @@ const updateDivision = `-- name: UpdateDivision :one
 UPDATE
 	divisions
 SET
-	name = $1
+	name = $1::varchar(255)
 WHERE
 	id = $2
 RETURNING
