@@ -24,7 +24,7 @@ func TestDeleteDivisionSuccess(t *testing.T) {
 
 	ctx := context.Background()
 
-	store.EXPECT().DeleteDivision(ctx, uuid.MustParse(mockuuid)).Return(nil)
+	store.EXPECT().DeleteDivision(ctx, uuid.MustParse(mockuuid)).Return(int64(1), nil)
 
 	response := usecase.DeleteDivision(model.DeleteDivisionRequest{
 		ID: mockuuid,
@@ -48,7 +48,7 @@ func TestDeleteDivisionFailed(t *testing.T) {
 
 	ctx := context.Background()
 
-	store.EXPECT().DeleteDivision(ctx, uuid.MustParse(mockuuid)).Return(errors.New("Salah UUID"))
+	store.EXPECT().DeleteDivision(ctx, uuid.MustParse(mockuuid)).Return(int64(0), errors.New("Salah UUID"))
 
 	response := usecase.DeleteDivision(model.DeleteDivisionRequest{
 		ID: mockuuid,
