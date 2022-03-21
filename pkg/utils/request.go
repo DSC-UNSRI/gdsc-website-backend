@@ -12,10 +12,25 @@ import (
 
 func BindJSONAndValidate(ctx *gin.Context, i interface{}) bool {
 	err := ctx.ShouldBindJSON(i)
+
 	if err == nil {
 		return true
 	}
+	validate(ctx, err)
+	return false
+}
 
+func BindURIAndValidate(ctx *gin.Context, i interface{}) bool {
+
+	err := ctx.ShouldBindUri(i)
+	if err == nil {
+		return true
+	}
+	validate(ctx, err)
+	return false
+}
+
+func validate(ctx *gin.Context, err error) {
 	if errValidations, ok := err.(validator.ValidationErrors); ok {
 		res := validations.HandleValidationErrors(errValidations)
 		ctx.JSON(res.Status, res)
@@ -28,6 +43,4 @@ func BindJSONAndValidate(ctx *gin.Context, i interface{}) bool {
 	} else {
 		ctx.JSON(http.StatusInternalServerError, ToWebServiceResponse("Internal server error", http.StatusInternalServerError, nil))
 	}
-
-	return false
 }
