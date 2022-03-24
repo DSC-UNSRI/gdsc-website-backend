@@ -25,10 +25,19 @@ components:
     Division:
       $ref: "./openapi/schemas/division.yaml"
 
+    Members:
+      $ref: "./openapi/schemas/member.yaml"
+
+
 tags:
   - name: Divisions
     description: Any API endpoints related to division here
-
+  - name : Members
+    description: Any API endpoints to member here
 paths:
   /divisions:
     $ref: "./openapi/paths/divisions.yaml"
+  /members:
+    $ref: "./openapi/paths/members.yaml"
+
+

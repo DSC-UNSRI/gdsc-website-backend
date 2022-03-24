@@ -1,3 +1,18 @@
+created:
+  description: "success create {source}"
+  content:
+    application/json:
+      schema:
+        allOf:
+          - $ref: "../schemas/response.yaml"
+          - properties:
+              status:
+                example: 201
+              errors:
+                nullable: true
+                default: null
+
+
 unprocessable-entity:
   description: "Request error from client"
   content:
@@ -6,6 +21,10 @@ unprocessable-entity:
         allOf:
           - $ref: "../schemas/response.yaml"
           - properties:
+              message:
+                example: ""
+              status:
+                example: 422
               data:
                 nullable: true
                 default: null
@@ -14,4 +33,26 @@ unprocessable-entity:
                 example:
                   - Ini error 1
                   - Ini error 2
+
+internal-server-error:
+  description: "Request error from client"
+  content:
+    application/json:
+      schema:
+        properties:
+          message:
+            type: string
+            description: Any message about the response here
+            example: Internal Server Error
+          status:
+            type: integer
+            description: "Http status code"
+            example: 500
+          data:
+            type: object
+            nullable: true
+            example: null
+        required:
+          - message
+          - status
 

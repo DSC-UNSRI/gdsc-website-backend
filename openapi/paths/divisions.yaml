@@ -27,6 +27,10 @@ post:
             allOf:
               - $ref: "../schemas/response.yaml"
               - properties:
+                  message:
+                    example: Success Create a Division
+                  status: 
+                    example: 201
                   data:
                     type: object
                     properties:
@@ -34,3 +38,38 @@ post:
                         $ref: "../schemas/division.yaml"
     "422":
       $ref: "../responses/responses.yml#/unprocessable-entity"
+    "500":
+      $ref: "../responses/responses.yml#/internal-server-error"
+
+delete:
+  security:
+    - jwt: []
+  tags:
+    - Divisions
+  summary: Delete a division
+  description: Delete a division
+  parameters:
+    - in: path
+      name: division_id
+      schema:
+        type: integer
+        required: true
+      description: Division Id
+  responses:
+    "200":
+      description: Success Delete a division
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "../schemas/response.yaml"
+              - properties:
+                  message:
+                    example: Success Delete a Division
+                  status: 
+                    example: 200
+                  data:
+                    type: object
+                    example: null
+    "500":
+      $ref: "../responses/responses.yml#/internal-server-error"
