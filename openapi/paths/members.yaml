@@ -1,0 +1,57 @@
+post:
+  tags: 
+    - Members
+  summary: Create Member
+  description:
+  requestBody:
+    description: Request Body to Create a Member
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            fullname:
+              type: string
+              example: Tegar Cahya Bayu Siregar
+            university:
+              type: string
+              example: Sriwijaya University
+            role_id:
+              type: string
+              example: 89472160-d42f-406b-91d0-70d118469384
+            division_id:
+              type: string
+              example: 8bd727e6-1b72-4daf-bd19-167c982a1fdd
+            picture_path:
+              type: string
+              example: "/profile/pic/thisispicture.jpg"
+          required:
+            - fullname
+            - university
+            - role_id
+  responses:
+    "201":
+      description: Success create a Member
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "../schemas/response.yaml"
+              - properties:
+                  message:
+                    example: Success create a Member
+                  status:
+                    example: 201
+                  data:
+                    type: object
+                    properties:
+                      member:
+                        $ref: "../schemas/member.yaml"
+    "422":
+      $ref: "../responses/responses.yml#/unprocessable-entity"
+    "500":
+      $ref: "../responses/responses.yml#/internal-server-error"
+
+
+
