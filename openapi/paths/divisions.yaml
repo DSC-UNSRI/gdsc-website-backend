@@ -71,5 +71,7 @@ delete:
                   data:
                     type: object
                     example: null
+    "422":
+      $ref: "../responses/responses.yml#/unprocessable-entity"
     "500":
       $ref: "../responses/responses.yml#/internal-server-error"
