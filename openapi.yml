@@ -8,17 +8,36 @@ servers:
   - url: https://gdsc-api.nabiels.my.id/api/v1
 
 components:
+  securitySchemes:
+    jwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "JWT Authentication for protected resources"
+
+  responses:
+    $ref: "./openapi/responses/responses.yml"
+
   schemas:
-    response:
+    Response:
       $ref: "./openapi/schemas/response.yaml"
 
-    division:
+    Division:
       $ref: "./openapi/schemas/division.yaml"
+
+    Members:
+      $ref: "./openapi/schemas/member.yaml"
+
 
 tags:
   - name: Divisions
-    description: Any API endpoints related with division here
-
+    description: Any API endpoints related to division here
+  - name : Members
+    description: Any API endpoints to member here
 paths:
   /divisions:
     $ref: "./openapi/paths/divisions.yaml"
+  /members:
+    $ref: "./openapi/paths/members.yaml"
+
+

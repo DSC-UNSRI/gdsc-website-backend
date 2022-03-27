@@ -1,5 +1,6 @@
 title: Response
 type: object
+description: Schema for all responses
 properties:
   message:
     type: string
