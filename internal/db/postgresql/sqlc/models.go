@@ -4,10 +4,49 @@ package postgresql
 
 import (
 	"database/sql"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
 )
+
+type DivisionType string
+
+const (
+	DivisionTypeLEAD     DivisionType = "LEAD"
+	DivisionTypeCOLEAD   DivisionType = "COLEAD"
+	DivisionTypeDIVISION DivisionType = "DIVISION"
+)
+
+func (e *DivisionType) Scan(src interface{}) error {
+	switch s := src.(type) {
+	case []byte:
+		*e = DivisionType(s)
+	case string:
+		*e = DivisionType(s)
+	default:
+		return fmt.Errorf("unsupported scan type for DivisionType: %T", src)
+	}
+	return nil
+}
+
+type SettingType string
+
+const (
+	SettingTypeActiveGeneration SettingType = "active_generation"
+)
+
+func (e *SettingType) Scan(src interface{}) error {
+	switch s := src.(type) {
+	case []byte:
+		*e = SettingType(s)
+	case string:
+		*e = SettingType(s)
+	default:
+		return fmt.Errorf("unsupported scan type for SettingType: %T", src)
+	}
+	return nil
+}
 
 type CoreTeam struct {
 	DivisionID uuid.UUID
@@ -15,8 +54,16 @@ type CoreTeam struct {
 }
 
 type Division struct {
+	ID           uuid.UUID
+	Name         string
+	GenerationID uuid.UUID
+	Type         DivisionType
+	CreatedAt    time.Time
+}
+
+type Generation struct {
 	ID        uuid.UUID
-	Name      string
+	Year      string
 	CreatedAt time.Time
 }
 
@@ -25,7 +72,7 @@ type Member struct {
 	FullName    string
 	University  string
 	RoleID      uuid.UUID
-	DivisionID  uuid.NullUUID
+	DivisionID  uuid.UUID
 	PicturePath sql.NullString
 	CreatedAt   time.Time
 	DeletedAt   sql.NullTime
@@ -33,9 +80,9 @@ type Member struct {
 
 type Message struct {
 	ID          uuid.UUID
-	FullName    string
-	PhoneNumber string
-	Question    string
+	FullName    sql.NullString
+	PhoneNumber sql.NullString
+	Question    sql.NullString
 	CreatedAt   time.Time
 	DeletedAt   sql.NullTime
 }
@@ -44,4 +91,10 @@ type Role struct {
 	ID        uuid.UUID
 	Name      string
 	CreatedAt time.Time
+}
+
+type Setting struct {
+	Value       sql.NullString
+	RelatedID   uuid.NullUUID
+	SettingType SettingType
 }

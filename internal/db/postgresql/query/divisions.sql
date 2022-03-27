@@ -1,6 +1,12 @@
 -- name: CreateDivision :one
-INSERT INTO divisions (name)
-	VALUES (@name::varchar(255))
+INSERT INTO divisions (name, generation_id, type)
+	VALUES (@NAME::varchar(255), (
+			SELECT
+				g.id
+			FROM
+				GET_ACTIVE_GENERATION() g
+			LIMIT 1),
+		@type)
 RETURNING
 	*;
 
@@ -12,7 +18,7 @@ WHERE id = @division_id;
 UPDATE
 	divisions
 SET
-	name = @name::varchar(255)
+	name = @NAME::varchar(255)
 WHERE
 	id = @divisionId
 RETURNING
@@ -27,9 +33,22 @@ WHERE
 	id = @divisionId
 LIMIT 1;
 
--- name: ListDivisions :many
+-- name: ListAllDivisions :many
 SELECT
 	*
 FROM
 	divisions
+LIMIT $1 OFFSET $2;
+
+-- name: ListActiveDivisions :many
+SELECT
+	*
+FROM
+	divisions
+WHERE
+	generation_id = (
+		SELECT
+			g.id
+		FROM
+			GET_ACTIVE_GENERATION() g)
 LIMIT $1 OFFSET $2;

@@ -5,6 +5,8 @@ import (
 	"net/http"
 
 	"github.com/DSC-UNSRI/gdsc-website-backend/internal/model"
+	"github.com/DSC-UNSRI/gdsc-website-backend/pkg/utils"
+	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
 
@@ -12,27 +14,15 @@ func (usecase *divisionUsecaseImpl) GetDivision(req model.GetDivisionRequest) mo
 	uuid, err := uuid.Parse(req.ID)
 
 	if err != nil {
-		return model.WebServiceResponse{
-			Message: "ID tidak valid",
-			Status:  http.StatusUnprocessableEntity,
-			Data:    nil,
-		}
+		return utils.ToWebServiceResponse("ID tidak valid", http.StatusUnprocessableEntity, nil)
 	}
 
 	division, err := usecase.Store.GetDivision(context.Background(), uuid)
 	if err != nil {
-		return model.WebServiceResponse{
-			Message: "Gagal mengambil data divisi",
-			Status:  http.StatusInternalServerError,
-			Data:    nil,
-		}
+		return utils.ToWebServiceResponse("Gagal mengambil data divisi", http.StatusInternalServerError, nil)
 	}
 
-	return model.WebServiceResponse{
-		Message: "Sukses mengambil data divisi",
-		Status:  http.StatusOK,
-		Data: map[string]interface{}{
-			"division": division,
-		},
-	}
+	return utils.ToWebServiceResponse("Sukses mengambil data divisi", http.StatusOK, gin.H{
+		"division": division,
+	})
 }

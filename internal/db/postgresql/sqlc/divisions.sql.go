@@ -10,16 +10,33 @@ import (
 )
 
 const createDivision = `-- name: CreateDivision :one
-INSERT INTO divisions (name)
-	VALUES ($1::varchar(255))
+INSERT INTO divisions (name, generation_id, type)
+	VALUES ($1::varchar(255), (
+			SELECT
+				g.id
+			FROM
+				GET_ACTIVE_GENERATION() g
+			LIMIT 1),
+		$2)
 RETURNING
-	id, name, created_at
+	id, name, generation_id, type, created_at
 `
 
-func (q *Queries) CreateDivision(ctx context.Context, name string) (Division, error) {
-	row := q.db.QueryRow(ctx, createDivision, name)
+type CreateDivisionParams struct {
+	Name string
+	Type DivisionType
+}
+
+func (q *Queries) CreateDivision(ctx context.Context, arg CreateDivisionParams) (Division, error) {
+	row := q.db.QueryRow(ctx, createDivision, arg.Name, arg.Type)
 	var i Division
-	err := row.Scan(&i.ID, &i.Name, &i.CreatedAt)
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.GenerationID,
+		&i.Type,
+		&i.CreatedAt,
+	)
 	return i, err
 }
 
@@ -38,7 +55,7 @@ func (q *Queries) DeleteDivision(ctx context.Context, divisionID uuid.UUID) (int
 
 const getDivision = `-- name: GetDivision :one
 SELECT
-	id, name, created_at
+	id, name, generation_id, type, created_at
 FROM
 	divisions
 WHERE
@@ -49,25 +66,37 @@ LIMIT 1
 func (q *Queries) GetDivision(ctx context.Context, divisionid uuid.UUID) (Division, error) {
 	row := q.db.QueryRow(ctx, getDivision, divisionid)
 	var i Division
-	err := row.Scan(&i.ID, &i.Name, &i.CreatedAt)
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.GenerationID,
+		&i.Type,
+		&i.CreatedAt,
+	)
 	return i, err
 }
 
-const listDivisions = `-- name: ListDivisions :many
+const listActiveDivisions = `-- name: ListActiveDivisions :many
 SELECT
-	id, name, created_at
+	id, name, generation_id, type, created_at
 FROM
 	divisions
+WHERE
+	generation_id = (
+		SELECT
+			g.id
+		FROM
+			GET_ACTIVE_GENERATION() g)
 LIMIT $1 OFFSET $2
 `
 
-type ListDivisionsParams struct {
+type ListActiveDivisionsParams struct {
 	Limit  int32
 	Offset int32
 }
 
-func (q *Queries) ListDivisions(ctx context.Context, arg ListDivisionsParams) ([]Division, error) {
-	rows, err := q.db.Query(ctx, listDivisions, arg.Limit, arg.Offset)
+func (q *Queries) ListActiveDivisions(ctx context.Context, arg ListActiveDivisionsParams) ([]Division, error) {
+	rows, err := q.db.Query(ctx, listActiveDivisions, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +104,52 @@ func (q *Queries) ListDivisions(ctx context.Context, arg ListDivisionsParams) ([
 	items := []Division{}
 	for rows.Next() {
 		var i Division
-		if err := rows.Scan(&i.ID, &i.Name, &i.CreatedAt); err != nil {
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.GenerationID,
+			&i.Type,
+			&i.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listAllDivisions = `-- name: ListAllDivisions :many
+SELECT
+	id, name, generation_id, type, created_at
+FROM
+	divisions
+LIMIT $1 OFFSET $2
+`
+
+type ListAllDivisionsParams struct {
+	Limit  int32
+	Offset int32
+}
+
+func (q *Queries) ListAllDivisions(ctx context.Context, arg ListAllDivisionsParams) ([]Division, error) {
+	rows, err := q.db.Query(ctx, listAllDivisions, arg.Limit, arg.Offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []Division{}
+	for rows.Next() {
+		var i Division
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.GenerationID,
+			&i.Type,
+			&i.CreatedAt,
+		); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
@@ -94,7 +168,7 @@ SET
 WHERE
 	id = $2
 RETURNING
-	id, name, created_at
+	id, name, generation_id, type, created_at
 `
 
 type UpdateDivisionParams struct {
@@ -105,6 +179,12 @@ type UpdateDivisionParams struct {
 func (q *Queries) UpdateDivision(ctx context.Context, arg UpdateDivisionParams) (Division, error) {
 	row := q.db.QueryRow(ctx, updateDivision, arg.Name, arg.Divisionid)
 	var i Division
-	err := row.Scan(&i.ID, &i.Name, &i.CreatedAt)
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.GenerationID,
+		&i.Type,
+		&i.CreatedAt,
+	)
 	return i, err
 }

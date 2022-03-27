@@ -21,7 +21,7 @@ type CreateMemberParams struct {
 	FullName    string
 	University  string
 	RoleID      uuid.UUID
-	DivisionID  uuid.NullUUID
+	DivisionID  uuid.UUID
 	PicturePath sql.NullString
 }
 
@@ -141,7 +141,7 @@ type UpdateMemberParams struct {
 	Name        string
 	University  string
 	Roleid      uuid.UUID
-	Divisionid  uuid.NullUUID
+	Divisionid  uuid.UUID
 	Picturepath sql.NullString
 }
 
