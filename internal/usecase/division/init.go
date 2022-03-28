@@ -5,7 +5,7 @@ import (
 	"github.com/DSC-UNSRI/gdsc-website-backend/internal/model"
 )
 
-//go:generate mockgen -source=./init.go -destination=./__mock__/division.go -package=mock_division
+//go:generate mockgen -source=./init.go -destination=./__mock__/division.go -package=mock_division_usecase
 type DivisionUsecase interface {
 	CreateDivision(model.CreateDivisionRequest) model.WebServiceResponse
 	DeleteDivision(model.DeleteDivisionRequest) model.WebServiceResponse

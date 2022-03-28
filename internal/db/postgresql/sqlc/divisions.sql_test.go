@@ -1,4 +1,4 @@
-package postgresql_test
+package postgresql
 
 import (
 	"context"
@@ -6,14 +6,16 @@ import (
 	"testing"
 	"time"
 
-	postgresql "github.com/DSC-UNSRI/gdsc-website-backend/internal/db/postgresql/sqlc"
 	"github.com/bxcodec/faker/v3"
 	"github.com/jackc/pgx/v4"
 	"github.com/stretchr/testify/require"
 )
 
-func createDivision(t *testing.T) postgresql.Division {
-	division, err := querier.CreateDivision(context.Background(), faker.Name())
+func createDivisionHelper(t *testing.T) Division {
+	division, err := querier.CreateDivision(context.Background(), CreateDivisionParams{
+		Name: faker.Name(),
+		Type: DivisionTypeDIVISION,
+	})
 	require.NoError(t, err)
 	require.NotEmpty(t, division)
 	require.NotZero(t, division.ID)
@@ -23,9 +25,12 @@ func createDivision(t *testing.T) postgresql.Division {
 	return division
 }
 
-func createDivisionLongString(t *testing.T) postgresql.Division {
+func createDivisionLongString(t *testing.T) Division {
 	longString := "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"
-	division, err := querier.CreateDivision(context.Background(), longString)
+	division, err := querier.CreateDivision(context.Background(), CreateDivisionParams{
+		Name: longString,
+		Type: DivisionTypeCOLEAD,
+	})
 	if err != nil {
 		log.Fatalf("something went wrong %v", err)
 	}
@@ -36,16 +41,18 @@ func createDivisionLongString(t *testing.T) postgresql.Division {
 }
 
 func TestCreateDivision(t *testing.T) {
-	createDivision(t)
+	setupActiveGeneration(t, true)
+	createDivisionHelper(t)
 	createDivisionLongString(t)
 }
 
 func TestUpdateDivision(t *testing.T) {
+	setupActiveGeneration(t, true)
 	faker.SetGenerateUniqueValues(true)
-	division := createDivision(t)
+	division := createDivisionHelper(t)
 	randomName := faker.Name()
 
-	updatedDivision, err := querier.UpdateDivision(context.Background(), postgresql.UpdateDivisionParams{
+	updatedDivision, err := querier.UpdateDivision(context.Background(), UpdateDivisionParams{
 		Divisionid: division.ID,
 		Name:       randomName,
 	})
@@ -59,7 +66,8 @@ func TestUpdateDivision(t *testing.T) {
 }
 
 func TestGetDivision(t *testing.T) {
-	division := createDivision(t)
+	setupActiveGeneration(t, true)
+	division := createDivisionHelper(t)
 
 	newDivision, err := querier.GetDivision(context.Background(), division.ID)
 	require.NoError(t, err)
@@ -69,14 +77,15 @@ func TestGetDivision(t *testing.T) {
 	require.Equal(t, division.CreatedAt, newDivision.CreatedAt)
 }
 
-func TestListDivision(t *testing.T) {
+func TestListAllDivision(t *testing.T) {
+	setupActiveGeneration(t, true)
 	var count int = 5
 	for i := 0; i < count; i++ {
-		createDivision(t)
+		createDivisionHelper(t)
 	}
 
-	divisions, err := querier.ListDivisions(context.Background(), postgresql.ListDivisionsParams{
-		Limit:  5,
+	divisions, err := querier.ListAllDivisions(context.Background(), ListAllDivisionsParams{
+		Limit:  int32(count),
 		Offset: 0,
 	})
 	require.NoError(t, err)
@@ -86,8 +95,34 @@ func TestListDivision(t *testing.T) {
 	}
 }
 
+func deleteAllDivisions(t *testing.T) {
+	_, err := querier.db.Exec(context.Background(), "DELETE FROM divisions")
+	require.NoError(t, err)
+}
+
+func TestListActiveDivisions(t *testing.T) {
+	setupActiveGeneration(t, true)
+	deleteAllDivisions(t)
+	count := 4
+	for i := 0; i < count; i++ {
+		createDivisionHelper(t)
+	}
+
+	divisions, err := querier.ListActiveDivisions(context.Background(), ListActiveDivisionsParams{
+		Limit:  int32(count),
+		Offset: 0,
+	})
+	require.NoError(t, err)
+	require.NotEmpty(t, divisions)
+
+	for _, v := range divisions {
+		require.Equal(t, DivisionTypeDIVISION, v.Type)
+	}
+
+}
+
 func TestDeleteDivision(t *testing.T) {
-	division := createDivision(t)
+	division := createDivisionHelper(t)
 	affectedRows, err := querier.DeleteDivision(context.Background(), division.ID)
 	require.NotZero(t, affectedRows)
 	require.NoError(t, err)

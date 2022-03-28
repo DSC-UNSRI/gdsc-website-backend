@@ -21,12 +21,24 @@ migrate-up:
 migrate-down:
 	migrate -path ./internal/db/postgresql/migration -database $(DB_CONNECTION_URL) -verbose down 
 
+migrate-drop:
+	migrate -path ./internal/db/postgresql/migration -database $(DB_CONNECTION_URL) -verbose drop
+
+migrate-up-test:
+	migrate -path ./internal/db/postgresql/migration -database $(DB_CONNECTION_TEST_URL) -verbose up
+
+migrate-down-test:
+	migrate -path ./internal/db/postgresql/migration -database $(DB_CONNECTION_TEST_URL) -verbose down -all
+
+migrate-drop-test:
+	migrate -path ./internal/db/postgresql/migration -database $(DB_CONNECTION_TEST_URL) -verbose drop
+
 migrate-fresh: migrate-down migrate-up
 
 generate-migration-file:
 	migrate create -ext sql -dir ./internal/db/postgresql/migration -seq $(table_name)
 
 sqlc:
-	sqlc generate
+	sqlc -f sqlc.yaml generate
 
 .PHONY:	migrate-up migrate-down sqlc migrate-fresh generate-migration-file run build

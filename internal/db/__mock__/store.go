@@ -37,18 +37,33 @@ func (m *MockStore) EXPECT() *MockStoreMockRecorder {
 }
 
 // CreateDivision mocks base method.
-func (m *MockStore) CreateDivision(ctx context.Context, name string) (postgresql.Division, error) {
+func (m *MockStore) CreateDivision(ctx context.Context, arg postgresql.CreateDivisionParams) (postgresql.Division, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateDivision", ctx, name)
+	ret := m.ctrl.Call(m, "CreateDivision", ctx, arg)
 	ret0, _ := ret[0].(postgresql.Division)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // CreateDivision indicates an expected call of CreateDivision.
-func (mr *MockStoreMockRecorder) CreateDivision(ctx, name interface{}) *gomock.Call {
+func (mr *MockStoreMockRecorder) CreateDivision(ctx, arg interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateDivision", reflect.TypeOf((*MockStore)(nil).CreateDivision), ctx, name)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateDivision", reflect.TypeOf((*MockStore)(nil).CreateDivision), ctx, arg)
+}
+
+// CreateGeneration mocks base method.
+func (m *MockStore) CreateGeneration(ctx context.Context, year string) (postgresql.CreateGenerationRow, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateGeneration", ctx, year)
+	ret0, _ := ret[0].(postgresql.CreateGenerationRow)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateGeneration indicates an expected call of CreateGeneration.
+func (mr *MockStoreMockRecorder) CreateGeneration(ctx, year interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateGeneration", reflect.TypeOf((*MockStore)(nil).CreateGeneration), ctx, year)
 }
 
 // CreateMember mocks base method.
@@ -66,6 +81,36 @@ func (mr *MockStoreMockRecorder) CreateMember(ctx, arg interface{}) *gomock.Call
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateMember", reflect.TypeOf((*MockStore)(nil).CreateMember), ctx, arg)
 }
 
+// CreateRole mocks base method.
+func (m *MockStore) CreateRole(ctx context.Context, name string) (postgresql.Role, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateRole", ctx, name)
+	ret0, _ := ret[0].(postgresql.Role)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateRole indicates an expected call of CreateRole.
+func (mr *MockStoreMockRecorder) CreateRole(ctx, name interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateRole", reflect.TypeOf((*MockStore)(nil).CreateRole), ctx, name)
+}
+
+// CreateSetting mocks base method.
+func (m *MockStore) CreateSetting(ctx context.Context, arg postgresql.CreateSettingParams) (postgresql.Setting, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateSetting", ctx, arg)
+	ret0, _ := ret[0].(postgresql.Setting)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateSetting indicates an expected call of CreateSetting.
+func (mr *MockStoreMockRecorder) CreateSetting(ctx, arg interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateSetting", reflect.TypeOf((*MockStore)(nil).CreateSetting), ctx, arg)
+}
+
 // DeleteDivision mocks base method.
 func (m *MockStore) DeleteDivision(ctx context.Context, divisionID uuid.UUID) (int64, error) {
 	m.ctrl.T.Helper()
@@ -81,6 +126,21 @@ func (mr *MockStoreMockRecorder) DeleteDivision(ctx, divisionID interface{}) *go
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteDivision", reflect.TypeOf((*MockStore)(nil).DeleteDivision), ctx, divisionID)
 }
 
+// DeleteGeneration mocks base method.
+func (m *MockStore) DeleteGeneration(ctx context.Context, id uuid.UUID) (int64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteGeneration", ctx, id)
+	ret0, _ := ret[0].(int64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteGeneration indicates an expected call of DeleteGeneration.
+func (mr *MockStoreMockRecorder) DeleteGeneration(ctx, id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteGeneration", reflect.TypeOf((*MockStore)(nil).DeleteGeneration), ctx, id)
+}
+
 // DeleteMember mocks base method.
 func (m *MockStore) DeleteMember(ctx context.Context, memberid uuid.UUID) error {
 	m.ctrl.T.Helper()
@@ -93,6 +153,36 @@ func (m *MockStore) DeleteMember(ctx context.Context, memberid uuid.UUID) error 
 func (mr *MockStoreMockRecorder) DeleteMember(ctx, memberid interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteMember", reflect.TypeOf((*MockStore)(nil).DeleteMember), ctx, memberid)
+}
+
+// DeleteRole mocks base method.
+func (m *MockStore) DeleteRole(ctx context.Context, roleid uuid.UUID) (int64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteRole", ctx, roleid)
+	ret0, _ := ret[0].(int64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteRole indicates an expected call of DeleteRole.
+func (mr *MockStoreMockRecorder) DeleteRole(ctx, roleid interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteRole", reflect.TypeOf((*MockStore)(nil).DeleteRole), ctx, roleid)
+}
+
+// GetActiveGeneration mocks base method.
+func (m *MockStore) GetActiveGeneration(ctx context.Context) (postgresql.GetActiveGenerationRow, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetActiveGeneration", ctx)
+	ret0, _ := ret[0].(postgresql.GetActiveGenerationRow)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetActiveGeneration indicates an expected call of GetActiveGeneration.
+func (mr *MockStoreMockRecorder) GetActiveGeneration(ctx interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetActiveGeneration", reflect.TypeOf((*MockStore)(nil).GetActiveGeneration), ctx)
 }
 
 // GetDivision mocks base method.
@@ -110,6 +200,21 @@ func (mr *MockStoreMockRecorder) GetDivision(ctx, divisionid interface{}) *gomoc
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetDivision", reflect.TypeOf((*MockStore)(nil).GetDivision), ctx, divisionid)
 }
 
+// GetGeneration mocks base method.
+func (m *MockStore) GetGeneration(ctx context.Context, id uuid.UUID) (postgresql.GetGenerationRow, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetGeneration", ctx, id)
+	ret0, _ := ret[0].(postgresql.GetGenerationRow)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetGeneration indicates an expected call of GetGeneration.
+func (mr *MockStoreMockRecorder) GetGeneration(ctx, id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetGeneration", reflect.TypeOf((*MockStore)(nil).GetGeneration), ctx, id)
+}
+
 // GetMember mocks base method.
 func (m *MockStore) GetMember(ctx context.Context, memberid uuid.UUID) (postgresql.Member, error) {
 	m.ctrl.T.Helper()
@@ -125,19 +230,79 @@ func (mr *MockStoreMockRecorder) GetMember(ctx, memberid interface{}) *gomock.Ca
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetMember", reflect.TypeOf((*MockStore)(nil).GetMember), ctx, memberid)
 }
 
-// ListDivisions mocks base method.
-func (m *MockStore) ListDivisions(ctx context.Context, arg postgresql.ListDivisionsParams) ([]postgresql.Division, error) {
+// GetRole mocks base method.
+func (m *MockStore) GetRole(ctx context.Context, roleid uuid.UUID) (postgresql.Role, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListDivisions", ctx, arg)
+	ret := m.ctrl.Call(m, "GetRole", ctx, roleid)
+	ret0, _ := ret[0].(postgresql.Role)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetRole indicates an expected call of GetRole.
+func (mr *MockStoreMockRecorder) GetRole(ctx, roleid interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRole", reflect.TypeOf((*MockStore)(nil).GetRole), ctx, roleid)
+}
+
+// GetSetting mocks base method.
+func (m *MockStore) GetSetting(ctx context.Context, settingtype postgresql.SettingType) (postgresql.Setting, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetSetting", ctx, settingtype)
+	ret0, _ := ret[0].(postgresql.Setting)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetSetting indicates an expected call of GetSetting.
+func (mr *MockStoreMockRecorder) GetSetting(ctx, settingtype interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSetting", reflect.TypeOf((*MockStore)(nil).GetSetting), ctx, settingtype)
+}
+
+// ListActiveDivisions mocks base method.
+func (m *MockStore) ListActiveDivisions(ctx context.Context, arg postgresql.ListActiveDivisionsParams) ([]postgresql.Division, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListActiveDivisions", ctx, arg)
 	ret0, _ := ret[0].([]postgresql.Division)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// ListDivisions indicates an expected call of ListDivisions.
-func (mr *MockStoreMockRecorder) ListDivisions(ctx, arg interface{}) *gomock.Call {
+// ListActiveDivisions indicates an expected call of ListActiveDivisions.
+func (mr *MockStoreMockRecorder) ListActiveDivisions(ctx, arg interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListDivisions", reflect.TypeOf((*MockStore)(nil).ListDivisions), ctx, arg)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListActiveDivisions", reflect.TypeOf((*MockStore)(nil).ListActiveDivisions), ctx, arg)
+}
+
+// ListAllDivisions mocks base method.
+func (m *MockStore) ListAllDivisions(ctx context.Context, arg postgresql.ListAllDivisionsParams) ([]postgresql.Division, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListAllDivisions", ctx, arg)
+	ret0, _ := ret[0].([]postgresql.Division)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListAllDivisions indicates an expected call of ListAllDivisions.
+func (mr *MockStoreMockRecorder) ListAllDivisions(ctx, arg interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListAllDivisions", reflect.TypeOf((*MockStore)(nil).ListAllDivisions), ctx, arg)
+}
+
+// ListGeneration mocks base method.
+func (m *MockStore) ListGeneration(ctx context.Context, arg postgresql.ListGenerationParams) ([]postgresql.ListGenerationRow, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListGeneration", ctx, arg)
+	ret0, _ := ret[0].([]postgresql.ListGenerationRow)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListGeneration indicates an expected call of ListGeneration.
+func (mr *MockStoreMockRecorder) ListGeneration(ctx, arg interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListGeneration", reflect.TypeOf((*MockStore)(nil).ListGeneration), ctx, arg)
 }
 
 // ListMembers mocks base method.
@@ -155,6 +320,36 @@ func (mr *MockStoreMockRecorder) ListMembers(ctx, arg interface{}) *gomock.Call 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListMembers", reflect.TypeOf((*MockStore)(nil).ListMembers), ctx, arg)
 }
 
+// ListRole mocks base method.
+func (m *MockStore) ListRole(ctx context.Context, arg postgresql.ListRoleParams) ([]postgresql.Role, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListRole", ctx, arg)
+	ret0, _ := ret[0].([]postgresql.Role)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListRole indicates an expected call of ListRole.
+func (mr *MockStoreMockRecorder) ListRole(ctx, arg interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListRole", reflect.TypeOf((*MockStore)(nil).ListRole), ctx, arg)
+}
+
+// SetActiveGeneration mocks base method.
+func (m *MockStore) SetActiveGeneration(ctx context.Context, generationid uuid.NullUUID) (postgresql.SetActiveGenerationRow, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SetActiveGeneration", ctx, generationid)
+	ret0, _ := ret[0].(postgresql.SetActiveGenerationRow)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SetActiveGeneration indicates an expected call of SetActiveGeneration.
+func (mr *MockStoreMockRecorder) SetActiveGeneration(ctx, generationid interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetActiveGeneration", reflect.TypeOf((*MockStore)(nil).SetActiveGeneration), ctx, generationid)
+}
+
 // UpdateDivision mocks base method.
 func (m *MockStore) UpdateDivision(ctx context.Context, arg postgresql.UpdateDivisionParams) (postgresql.Division, error) {
 	m.ctrl.T.Helper()
@@ -170,6 +365,21 @@ func (mr *MockStoreMockRecorder) UpdateDivision(ctx, arg interface{}) *gomock.Ca
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateDivision", reflect.TypeOf((*MockStore)(nil).UpdateDivision), ctx, arg)
 }
 
+// UpdateGeneration mocks base method.
+func (m *MockStore) UpdateGeneration(ctx context.Context, arg postgresql.UpdateGenerationParams) (postgresql.UpdateGenerationRow, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateGeneration", ctx, arg)
+	ret0, _ := ret[0].(postgresql.UpdateGenerationRow)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdateGeneration indicates an expected call of UpdateGeneration.
+func (mr *MockStoreMockRecorder) UpdateGeneration(ctx, arg interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateGeneration", reflect.TypeOf((*MockStore)(nil).UpdateGeneration), ctx, arg)
+}
+
 // UpdateMember mocks base method.
 func (m *MockStore) UpdateMember(ctx context.Context, arg postgresql.UpdateMemberParams) (postgresql.Member, error) {
 	m.ctrl.T.Helper()
@@ -183,4 +393,34 @@ func (m *MockStore) UpdateMember(ctx context.Context, arg postgresql.UpdateMembe
 func (mr *MockStoreMockRecorder) UpdateMember(ctx, arg interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateMember", reflect.TypeOf((*MockStore)(nil).UpdateMember), ctx, arg)
+}
+
+// UpdateRole mocks base method.
+func (m *MockStore) UpdateRole(ctx context.Context, arg postgresql.UpdateRoleParams) (postgresql.Role, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateRole", ctx, arg)
+	ret0, _ := ret[0].(postgresql.Role)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdateRole indicates an expected call of UpdateRole.
+func (mr *MockStoreMockRecorder) UpdateRole(ctx, arg interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateRole", reflect.TypeOf((*MockStore)(nil).UpdateRole), ctx, arg)
+}
+
+// UpdateSetting mocks base method.
+func (m *MockStore) UpdateSetting(ctx context.Context, arg postgresql.UpdateSettingParams) (postgresql.Setting, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateSetting", ctx, arg)
+	ret0, _ := ret[0].(postgresql.Setting)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdateSetting indicates an expected call of UpdateSetting.
+func (mr *MockStoreMockRecorder) UpdateSetting(ctx, arg interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateSetting", reflect.TypeOf((*MockStore)(nil).UpdateSetting), ctx, arg)
 }

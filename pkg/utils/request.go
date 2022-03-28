@@ -7,8 +7,20 @@ import (
 	"github.com/DSC-UNSRI/gdsc-website-backend/internal/model"
 	"github.com/DSC-UNSRI/gdsc-website-backend/internal/validations"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
 )
+
+func BindWith(ctx *gin.Context, i interface{}, binding binding.Binding) bool {
+	err := ctx.ShouldBindWith(i, binding)
+
+	if err == nil {
+		return true
+	}
+
+	validate(ctx, err)
+	return false
+}
 
 func BindJSONAndValidate(ctx *gin.Context, i interface{}) bool {
 	err := ctx.ShouldBindJSON(i)
