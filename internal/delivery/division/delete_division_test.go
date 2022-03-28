@@ -89,6 +89,7 @@ func TestDeleteDivisionFailedValidation(t *testing.T) {
 }
 
 func TestDeleteDivisionFailedOnUUIDValidation(t *testing.T) {
+	rr, router := getRouter()
 
 	validator, ok := binding.Validator.Engine().(*validator.Validate)
 	if !ok {
