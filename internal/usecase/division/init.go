@@ -8,6 +8,7 @@ import (
 //go:generate mockgen -source=./init.go -destination=./__mock__/division.go -package=mock_division
 type DivisionUsecase interface {
 	CreateDivision(model.CreateDivisionRequest) model.WebServiceResponse
+	DeleteDivision(model.DeleteDivisionRequest) model.WebServiceResponse
 }
 
 var _ DivisionUsecase = &divisionUsecaseImpl{}

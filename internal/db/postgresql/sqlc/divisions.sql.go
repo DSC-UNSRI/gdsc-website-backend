@@ -5,6 +5,7 @@ package postgresql
 
 import (
 	"context"
+	"errors"
 
 	"github.com/google/uuid"
 )
@@ -23,14 +24,20 @@ func (q *Queries) CreateDivision(ctx context.Context, name string) (Division, er
 	return i, err
 }
 
-const deleteDivision = `-- name: DeleteDivision :exec
+const deleteDivision = `-- name: DeleteDivision :execrows
 DELETE FROM divisions
 WHERE id = $1
 `
 
-func (q *Queries) DeleteDivision(ctx context.Context, divisionID uuid.UUID) error {
-	_, err := q.db.Exec(ctx, deleteDivision, divisionID)
-	return err
+func (q *Queries) DeleteDivision(ctx context.Context, divisionID uuid.UUID) (error) {
+	
+	division,err := q.GetDivision(ctx, divisionID)
+	if division.Name != ""{
+		q.db.Exec(ctx, deleteDivision, divisionID)
+		return err
+	}
+	err = errors.New("invalid division id")
+	return  err
 }
 
 const getDivision = `-- name: GetDivision :one

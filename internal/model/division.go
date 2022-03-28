@@ -15,3 +15,7 @@ type Division struct {
 type CreateDivisionRequest struct {
 	Name string `json:"division_name" binding:"required"`
 }
+
+type DeleteDivisionRequest struct {
+	ID string `uri:"id" binding:"required,uuid"`
+}
