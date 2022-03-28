@@ -5,18 +5,28 @@ import (
 	"os"
 	"testing"
 
+	"github.com/DSC-UNSRI/gdsc-website-backend/internal/validations"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/go-playground/validator/v10"
 )
 
-var rr *httptest.ResponseRecorder
-var router *gin.Engine
-var ginCtx *gin.Context
+
+func getRouter() (*httptest.ResponseRecorder, *gin.Engine) {
+	rr := httptest.NewRecorder()
+	_, router := gin.CreateTestContext(rr)
+	return rr, router
+}
 
 func TestMain(m *testing.M) {
 	gin.SetMode(gin.TestMode)
-	rr = httptest.NewRecorder()
 
-	ginCtx, router = gin.CreateTestContext(rr)
+	validator, ok := binding.Validator.Engine().(*validator.Validate)
+	if !ok {
+		os.Exit(1)
+	}
+
+	validations.InitValidations(validator)
 
 	os.Exit(m.Run())
 }

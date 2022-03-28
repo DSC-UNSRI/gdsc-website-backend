@@ -16,6 +16,7 @@ import (
 )
 
 func TestDeleteDivisionSuccess(t *testing.T) {
+	rr, router := getRouter()
 
 	usecaseReturn := model.WebServiceResponse{
 		Message: "Divisi berhasil dihapus",
@@ -51,7 +52,9 @@ func TestDeleteDivisionSuccess(t *testing.T) {
 	require.Equal(t, dataResponse, string(body))
 }
 
-func TestDeleteDivisionFailed(t *testing.T) {
+func TestDeleteDivisionFailedValidation(t *testing.T) {
+	rr, router := getRouter()
+
 	usecaseReturn := model.WebServiceResponse{
 		Message: "Gagal menghapus divisi",
 		Status:  500,
