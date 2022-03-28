@@ -19,3 +19,7 @@ type CreateDivisionRequest struct {
 type DeleteDivisionRequest struct {
 	ID string `uri:"id" binding:"required,uuid"`
 }
+
+type GetDivisionRequest struct {
+	ID string `uri:"id" binding:"required,uuid"`
+}
